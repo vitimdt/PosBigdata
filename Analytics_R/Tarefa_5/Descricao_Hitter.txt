@@ -1,0 +1,104 @@
+Hitters	R Documentation
+Baseball Data
+Description
+Major League Baseball Data from the 1986 and 1987 seasons.
+
+Usage
+Hitters
+Format
+A data frame with 322 observations of major league players on the following 20 variables.
+
+
+
+AtBat
+Number of times at bat in 1986
+Numero de vezes no bastao com chances de rebatidas em 1986
+
+Hits
+Number of hits in 1986
+Número de rebatidas válidas em 1986
+
+HmRun
+Number of home runs in 1986
+Número de Home Runs em 1986 (corrida completa depois de rebater a bola)
+
+Runs
+Number of runs in 1986
+Número de corridas em 1986
+
+RBI
+Number of runs batted in 1986
+Número de RBIs em 1986
+
+Walks
+Number of walks in 1986
+Número de Walks em 1986
+
+Years
+Number of years in the major leagues
+Número de anos nas ligas principais
+
+CAtBat
+Number of times at bat during his career
+Numero de vezes no bastao com chances de rebatidas na carreira
+
+CHits
+Number of hits during his career
+Número de rebatidas válidas na carreira
+
+CHmRun
+Number of home runs during his career
+Número de Home Runs na carreira (corrida completa depois de rebater a bola)
+
+CRuns
+Number of runs during his career
+Número de corridas na carreira
+
+CRBI
+Number of runs batted in during his career
+Número de RBIs durante sua carreira
+
+CWalks
+Number of walks during his career
+Número de Walks na carreira
+
+League
+A factor with levels A and N indicating player's league at the end of 1986
+Um fator com níveis A e N indicando a liga do jogador no final de 1986
+
+Division
+A factor with levels E and W indicating player's division at the end of 1986
+Um fator com os níveis E e W indicando a divisão do jogador no final de 1986
+
+PutOuts
+Number of put outs in 1986
+Número de eliminações em 1986
+
+Assists
+Number of assists in 1986
+Número de assistências em 1986
+
+Errors
+Number of errors in 1986
+Número de erros em 1986
+
+Salary
+1987 annual salary on opening day in thousands of dollars
+1987 salário anual no dia da abertura em milhares de dólares
+
+NewLeague
+A factor with levels A and N indicating player's league at the beginning of 1987
+Um fator com níveis A e N indicando a liga do jogador no início de 1987
+
+
+
+
+Source
+This dataset was taken from the StatLib library which is maintained at Carnegie Mellon University. This is part of the data that was used in the 1988 ASA Graphics Section Poster Session. The salary data were originally from Sports Illustrated, April 20, 1987. The 1986 and career statistics were obtained from The 1987 Baseball Encyclopedia Update published by Collier Books, Macmillan Publishing Company, New York.
+
+References
+James, G., Witten, D., Hastie, T., and Tibshirani, R. (2013) An Introduction to Statistical Learning with applications in R, www.StatLearning.com, Springer-Verlag, New York
+
+Examples
+summary(Hitters)
+lm(Salary~AtBat+Hits,data=Hitters)

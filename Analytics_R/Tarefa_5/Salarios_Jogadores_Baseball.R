@@ -32,36 +32,50 @@ summary(dsHitters)
 # --------------------------------------------------------------------
 # Histograma sobre o Salário anual dos jogadores
 hist(dsHitters$Salary,
+     main="Histograma dos Salários",
      xlab="Salário Anual",
      ylab="Frequência",
      col="orange",
      border="brown")
 
 
-# Convertendo as variáveis Factor
-#unfactorize <- function(df){
-#for(i in which(sapply(df, class) == "factor")) df[[i]] = as.character(df[[i]])
-#return(df)
-#}
+# Função para converter as variáveis Factor em valores Char
+unfactorize <- function(df){
+  for(i in which(sapply(df, class) == "factor")) df[[i]] = as.character(df[[i]])
+  return(df)
+}
+# Aplicando no Dataframe
+dsHittersSemFactor <- unfactorize(dsHitters)
+str(dsHittersSemFactor)
 
-#library(dplyr)
-#library(hablar)
+# Criando variável númerica para Division (Divisão 'W' = 1 e Divisão 'E' = 2)
+dsHittersSemFactor$NumDivision <- 0
+dsHittersSemFactor[dsHittersSemFactor$Division == 'W',]$NumDivision <- 1
+dsHittersSemFactor[dsHittersSemFactor$Division == 'E',]$NumDivision <- 2
+str(dsHittersSemFactor)
 
-#df <- tibble(a = factor(c(1, 2, 3, 4)),
-#             b = factor(c(5, 6, 7, 8)))
+# Gerando o gráfico BoxPlot para analisar a relação de Divisão x Salários dos Jogadores em 1986
+boxplot(Salary~NumDivision,
+        data=dsHittersSemFactor,
+        main="Salários dos jogadores pela Divisão no final 1986",
+        xlab="Divisão (1 = W e 2 = E)",
+        ylab="Salário",
+        col="orange",
+        border="brown"
+)
 
-#df %>% convert(chr(a:b))
-#  a     b    
-#<chr> <chr>
-#1 1     5    
-#2 2     6    
-#3 3     7    
-#4 4     8  
-boxplot(Hits~Salary,
-        data=dsHitters,
-        main="Rebatidas em 1986 por Salário Anual",
-        xlab="Salário",
-        ylab="Rebatidas em 1986",
+# Criando variável númerica para League (Liga 'N' = 1 e Liga 'A' = 2)
+dsHittersSemFactor$NumLeague <- 0
+dsHittersSemFactor[dsHittersSemFactor$League == 'N',]$NumLeague <- 1
+dsHittersSemFactor[dsHittersSemFactor$League == 'A',]$NumLeague <- 2
+str(dsHittersSemFactor)
+
+# Gerando o gráfico BoxPlot para analisar a relação da Liga x Salários dos Jogadores em 1986
+boxplot(Salary~NumLeague,
+        data=dsHittersSemFactor,
+        main="Salários dos jogadores pela Liga no final 1986",
+        xlab="Liga (1 = N e 2 = A)",
+        ylab="Salário",
         col="orange",
         border="brown"
 )

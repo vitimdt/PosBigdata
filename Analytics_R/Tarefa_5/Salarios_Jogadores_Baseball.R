@@ -81,14 +81,33 @@ boxplot(Salary~NumLeague,
 )
 
 
-
-# Fazendo mais uma matriz de scatterplots,
-# incluindo a correlação no painel superior mas agora com proporcionalidade.
-panel.corprop <- function(x, y, ...)
-{
-        par(usr = c(0, 1, 0, 1))
-        txt <- as.character(format(cor(x, y), digits=2))
-        text(0.5, 0.5, txt, cex = 6* abs(cor(x, y)))
+# Matriz de scatterplots para verificar a correlação do Salário com as outras variáveis
+# Função para informar o indice de correlação no painel superior
+panel.pearson <- function(x, y, ...) {
+  horizontal <- (par("usr")[1] + par("usr")[2]) / 2; 
+  vertical <- (par("usr")[3] + par("usr")[4]) / 2; 
+  text(horizontal, vertical, format(abs(cor(x,y)), digits=2)) 
 }
-pairs(iris[1:4], main="Iris Dataset com Correlações de Tamanho Proporcional", pch=21, 
-      bg=c("red","green3","blue")[unclass(iris$Species)], upper.panel=panel.corprop)
+# Correlação das variáveis (Salary, AtBat, Hits, HmRun, Runs, RBI)
+pairs(~ Salary + AtBat + Hits + HmRun + Runs + RBI, 
+      data=dsHittersSemFactor, 
+      main="Correlação do Salário com outras variáveis (Salary, AtBat, Hits, HmRun, Runs, RBI)", 
+      pch=21, bg=c("green3"), upper.panel=panel.pearson)
+
+# Correlação das variáveis (Salary, Walks, Years, CAtBat, CHits, CHmRun)
+pairs(~ Salary + Walks + Years + CAtBat + CHits + CHmRun, 
+      data=dsHittersSemFactor, 
+      main="Correlação do Salário com outras variáveis (Salary, Walks, Years, CAtBat, CHits, CHmRun)", 
+      pch=21, bg=c("green3"), upper.panel=panel.pearson)
+
+# Correlação das variáveis (Salary, CRuns, CRBI, CWalks, PutOuts, Assists, Errors)
+pairs(~ Salary + CRuns + CRBI + CWalks + PutOuts + Assists + Errors, 
+      data=dsHittersSemFactor, 
+      main="Correlação do Salário com outras variáveis (Salary, CRuns, CRBI, CWalks, PutOuts, Assists, Errors)", 
+      pch=21, bg=c("green3"), upper.panel=panel.pearson)
+
+
+# GPlot das váriaveis com CRuns e CRBI pelo Salário, separando por Divisão
+library(ggplot2)
+qplot(Salary, CRuns, data=dsHittersSemFactor, facets=Division ~.)
+qplot(Salary, CRBI, data=dsHittersSemFactor, facets=Division ~.)

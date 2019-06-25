@@ -12,7 +12,6 @@
 # -------------------------
 library('ISLR')
 library('dplyr')
-library('hablar')
 
 # Verificando dataset, analisando as variáveis disponíveis
 summary(Hitters)
@@ -111,3 +110,17 @@ pairs(~ Salary + CRuns + CRBI + CWalks + PutOuts + Assists + Errors,
 library(ggplot2)
 qplot(Salary, CRuns, data=dsHittersSemFactor, facets=Division ~.)
 qplot(Salary, CRBI, data=dsHittersSemFactor, facets=Division ~.)
+
+# Criando uma nova coluna somando todas os indicadores positivos - os indicadores negativos do ano de 1986
+dsHittersSemFactor$totalInd <- with(dsHittersSemFactor, 
+                                    (AtBat+Hits+HmRun+Runs+RBI+Walks+Assists)-(PutOuts+Errors))
+# Criando uma nova coluna somando todas os indicadores positivos da carreira dos jogadores
+dsHittersSemFactor$totalIndCareer <- with(dsHittersSemFactor, (CAtBat+CHits+CHmRun+CRuns+CRBI+CWalks))
+
+# GPlot das variáveis calculadas com indicadores pelo Salário
+qplot(Salary, totalInd, data=dsHittersSemFactor, facets=Division ~.)
+qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=Division ~.)
+qplot(Salary, totalInd, data=dsHittersSemFactor, facets=League ~.)
+qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=League ~.)
+qplot(Salary, totalInd, data=dsHittersSemFactor, facets=NewLeague ~.)
+qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=NewLeague ~.)

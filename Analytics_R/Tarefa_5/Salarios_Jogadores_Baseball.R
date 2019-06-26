@@ -62,6 +62,7 @@ boxplot(Salary~NumDivision,
         col="orange",
         border="brown"
 )
+# Qual divisão apresenta os maiores salários? Resposta: Divisão E (Leste)
 
 # Criando variável númerica para League (Liga 'N' = 1 e Liga 'A' = 2)
 dsHittersSemFactor$NumLeague <- 0
@@ -78,7 +79,7 @@ boxplot(Salary~NumLeague,
         col="orange",
         border="brown"
 )
-
+# Qual Liga apresenta os maiores salários? Resposta: Liga A (Americana)
 
 # Matriz de scatterplots para verificar a correlação do Salário com as outras variáveis
 # Função para informar o indice de correlação no painel superior
@@ -105,6 +106,9 @@ pairs(~ Salary + CRuns + CRBI + CWalks + PutOuts + Assists + Errors,
       main="Correlação do Salário com outras variáveis (Salary, CRuns, CRBI, CWalks, PutOuts, Assists, Errors)", 
       pch=21, bg=c("green3"), upper.panel=panel.pearson)
 
+# Quais variáveis quantitativas apresentam maior correlação com o salário? 
+# Resp.: As estatísticas relacionadas a carreira dos jogadores: CAtBat, CHits, CHmRun, CRuns, CRBI
+
 
 # GPlot das váriaveis com CRuns e CRBI pelo Salário, separando por Divisão
 library(ggplot2)
@@ -124,3 +128,17 @@ qplot(Salary, totalInd, data=dsHittersSemFactor, facets=League ~.)
 qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=League ~.)
 qplot(Salary, totalInd, data=dsHittersSemFactor, facets=NewLeague ~.)
 qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=NewLeague ~.)
+
+# Criando uma coluna com a marcação dos jogadores que mudaram de liga para temporada de 1987
+dsHittersSemFactor$mudouLiga <- ifelse(dsHittersSemFactor$League == dsHittersSemFactor$NewLeague, 0, 1)
+str(dsHittersSemFactor)
+
+# Gerando o gráfico BoxPlot para analisar a relação Salários x Jogadores que mudaram de Liga
+boxplot(Salary~mudouLiga,
+        data=dsHittersSemFactor,
+        main="Salários dos jogadores X Mudaram de Liga?",
+        xlab="Mudou de Liga?",
+        ylab="Salário",
+        col="orange",
+        border="brown"
+)

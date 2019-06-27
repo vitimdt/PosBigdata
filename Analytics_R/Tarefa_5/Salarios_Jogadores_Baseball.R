@@ -4,7 +4,6 @@
 # Instalação de Pacotes Externos
 # -------------------------
 #install.packages('ISLR')
-#install.packages('hablar')
 #install.packages('ggplot2', dependencies=TRUE)
 
 # -------------------------
@@ -64,6 +63,19 @@ boxplot(Salary~NumDivision,
 )
 # Qual divisão apresenta os maiores salários? Resposta: Divisão E (Leste)
 
+# Somando os salários por Divisão
+filtro <- with(dsHittersSemFactor, Division == 'W')
+dsDivisaoW <- dsHittersSemFactor[filtro,]
+filtro <- with(dsHittersSemFactor, Division == 'E')
+dsDivisaoE <- dsHittersSemFactor[filtro,]
+# Soma dos salários de jogadores da Divisão W.
+sum(dsDivisaoW$Salary)
+# Resultado = 60417.5
+# Soma dos salários de jogadores da Divisão E.
+sum(dsDivisaoE$Salary)
+# Resultado = 80531.01
+
+
 # Criando variável númerica para League (Liga 'N' = 1 e Liga 'A' = 2)
 dsHittersSemFactor$NumLeague <- 0
 dsHittersSemFactor[dsHittersSemFactor$League == 'N',]$NumLeague <- 1
@@ -80,6 +92,19 @@ boxplot(Salary~NumLeague,
         border="brown"
 )
 # Qual Liga apresenta os maiores salários? Resposta: Liga A (Americana)
+
+# Somando os salários por Liga
+filtro <- with(dsHittersSemFactor, League == 'A')
+dsLigaA <- dsHittersSemFactor[filtro,]
+filtro <- with(dsHittersSemFactor, League == 'N')
+dsLigaN <- dsHittersSemFactor[filtro,]
+# Soma dos salários de jogadores da Liga A.
+sum(dsLigaA$Salary)
+# Resultado = 75337.94
+# Soma dos salários de jogadores da Liga N.
+sum(dsLigaN$Salary)
+# Resultado = 65610.57
+
 
 # Matriz de scatterplots para verificar a correlação do Salário com as outras variáveis
 # Função para informar o indice de correlação no painel superior
@@ -107,7 +132,7 @@ pairs(~ Salary + CRuns + CRBI + CWalks + PutOuts + Assists + Errors,
       pch=21, bg=c("green3"), upper.panel=panel.pearson)
 
 # Quais variáveis quantitativas apresentam maior correlação com o salário? 
-# Resp.: As estatísticas relacionadas a carreira dos jogadores: CAtBat, CHits, CHmRun, CRuns, CRBI
+# Resp.: As variáveis relacionadas a carreira dos jogadores: CAtBat, CHits, CHmRun, CRuns, CRBI
 
 
 # GPlot das váriaveis com CRuns e CRBI pelo Salário, separando por Divisão

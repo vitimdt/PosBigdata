@@ -1,4 +1,4 @@
-# Tarefa 5 - Estudo sobre salários de jogadores de baseball
+# Tarefa 5 - Estudo sobre salários de jogadores de baseball (DataSet Hitters)
 
 # -------------------------
 # Instalação de Pacotes Externos
@@ -10,7 +10,6 @@
 # Carregando as LIBs
 # -------------------------
 library('ISLR')
-library('dplyr')
 
 # Verificando dataset, analisando as variáveis disponíveis
 summary(Hitters)
@@ -23,6 +22,8 @@ nrow(na.omit(Hitters))
 dsHitters <- na.omit(Hitters)
 
 summary(dsHitters)
+# Achamos melhor retirar os registros com Salários faltantes, pois não encontramos nenhuma relação clara
+# que justifique realizar algum preenchimento aplicando algum regra genérica.
 
 
 # --------------------------------------------------------------------
@@ -151,8 +152,6 @@ qplot(Salary, totalInd, data=dsHittersSemFactor, facets=Division ~.)
 qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=Division ~.)
 qplot(Salary, totalInd, data=dsHittersSemFactor, facets=League ~.)
 qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=League ~.)
-qplot(Salary, totalInd, data=dsHittersSemFactor, facets=NewLeague ~.)
-qplot(Salary, totalIndCareer, data=dsHittersSemFactor, facets=NewLeague ~.)
 
 # Criando uma coluna com a marcação dos jogadores que mudaram de liga para temporada de 1987
 dsHittersSemFactor$mudouLiga <- ifelse(dsHittersSemFactor$League == dsHittersSemFactor$NewLeague, 0, 1)
@@ -167,3 +166,9 @@ boxplot(Salary~mudouLiga,
         col="orange",
         border="brown"
 )
+
+# Apresente suas conclusões, relacionadas à questão da influência dos fatores apresentados no salário.
+# Resp.: Apesar de não ter nenhuma variável com uma forte correlação com os Salários dos jogadores,
+# as variáveis com indicadores da carreira dos jogadores são os que mais influenciam os Salários. Outro
+# ponto que verificamos é que apenas jogadores com salários abaixo de 1000 milhares anuais que trocaram de
+# Liga para o ano 1987.

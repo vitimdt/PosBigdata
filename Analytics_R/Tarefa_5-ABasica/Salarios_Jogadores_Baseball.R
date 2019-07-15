@@ -10,6 +10,7 @@
 # Carregando as LIBs
 # -------------------------
 library('ISLR')
+library(ggplot2)
 
 # Verificando dataset, analisando as variáveis disponíveis
 summary(Hitters)
@@ -23,7 +24,7 @@ dsHitters <- na.omit(Hitters)
 
 summary(dsHitters)
 # Achamos melhor retirar os registros com Salários faltantes, pois não encontramos nenhuma relação clara
-# que justifique realizar algum preenchimento aplicando algum regra genérica.
+# que justifique realizar algum preenchimento aplicando alguma regra genérica.
 
 
 # --------------------------------------------------------------------
@@ -137,7 +138,6 @@ pairs(~ Salary + CRuns + CRBI + CWalks + PutOuts + Assists + Errors,
 
 
 # GPlot das váriaveis com CRuns e CRBI pelo Salário, separando por Divisão
-library(ggplot2)
 qplot(Salary, CRuns, data=dsHittersSemFactor, facets=Division ~.)
 qplot(Salary, CRBI, data=dsHittersSemFactor, facets=Division ~.)
 

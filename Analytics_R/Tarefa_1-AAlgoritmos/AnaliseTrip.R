@@ -71,13 +71,13 @@ elbow <- data.frame(2:max_k, wss)
 ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
   scale_x_continuous(breaks = seq(1, 15, by = 1),labs(x='Número de Agrupamentos'))
 
-# Executar o Kmeans de todas as variáveis com 3 clusters
-km <- kmeans(dsTrip[2:11], 3, nstart=100)
+# Executar o Kmeans de todas as variáveis com 5 clusters
+km <- kmeans(dsTrip[2:11], 5, nstart=100)
 # Visualizando.
-plot(dsTrip[2:11], col=(km$cluster+1) , main="Resultado do K-médias com 3 agrupamentos", pch=20, cex=2)
+plot(dsTrip[2:11], col=(km$cluster+1) , main="Resultado do K-médias com 5 agrupamentos", pch=20, cex=2)
 
 
-# Agrupando as notas de cada categoria em 3 grupos turisticos e tirando a média por usuário
+# Agrupando as notas de cada categoria em 3 grupos turísticos e tirando a média por usuário
 # Coluna Entretenimento (Categoria 2 + Categoria 7 + Categoria 8 + Categoria 9)
 # Coluna Hotelaria e Gastronomia (Categoria 3 + Categoria 4 + Categoria 6)
 # Coluna Cultural e Historico (Categoria 1 + Categoria 5 + Categoria 10)
@@ -105,14 +105,14 @@ elbow <- data.frame(2:max_k, wss)
 ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
   scale_x_continuous(breaks = seq(1, 10, by = 1),labs(x='Número de Agrupamentos'))
 
-# Executar o Kmeans das três novas variáveis com 3 clusters
-km2 <- kmeans(dsTripClassAgrupado[2:4], 3, nstart=100)
+# Executar o Kmeans das três novas variáveis com 5 clusters
+km2 <- kmeans(dsTripClassAgrupado[2:4], 5, nstart=100)
 # Visualizando.
-plot(dsTripClassAgrupado[2:4], col=(km2$cluster+1) , main="Resultado do K-médias com 3 agrupamentos", pch=20, cex=2)
+plot(dsTripClassAgrupado[2:4], col=(km2$cluster+1) , main="Resultado do K-médias com 5 agrupamentos", pch=20, cex=2)
 
 
 
-# Fazendo Agrupamento de duas categorias que tiveram melhor resultado com o KMeans
+# Fazendo Agrupamento de duas categorias que tiveram melhor resultado com o K-Means
 kmean_withinss <- function(k) {
   cluster <- kmeans(dsTrip[,c(4,7)], k)
   return (cluster$tot.withinss)
@@ -141,7 +141,7 @@ plot(dsTrip[,c(4,7)], col=(km2$cluster+1),
 # por determinados tipos de atrações do local?
 # Resp.: Analisando os resultados dos agrupamentos, podemos avaliar os grupos de usuários baseado nas notas
 # entre Resorts e Bares, que tiveram resultados mais claros. Através do gráfico, podemos utilizar como:
-# 1 - Usuários com características dos grupos Azul Escuro e Vermelho podem receber propagandas de outras 
+# 1 - Usuários com características dos grupos Azul Claro e Vermelho podem receber propagandas de outras 
 #     categorias para viagens;
-# 2 - Usuários com características dos grupos Verde e Azul Claro podem receber propagandas de Resorts da Ásia;
+# 2 - Usuários com características dos grupos Verde e Azul Escuro podem receber propagandas de Resorts da Ásia;
 # 3 - Usuários com características do grupo Rosa podem receber propagandas de Resorts e Bares da Ásia.

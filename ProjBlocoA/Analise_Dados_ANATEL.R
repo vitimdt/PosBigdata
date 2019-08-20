@@ -103,16 +103,20 @@ dsTim_PMDiario <- ds[with(ds, Nome.Fantasia == 'Tim'),]
 #Vivo
 dsVivo_PMDiario <- ds[with(ds, Nome.Fantasia == 'Vivo'),]
 
-teste <- dsVivo_PMDiario %>% group_by(Unidade.Federativa, Indicador)
-head(teste)
+dsMediaVivo <- dsVivo_PMDiario %>% group_by(Unidade.Federativa) %>% select(Unidade.Federativa)
+head(dsMediaVivo)
 
-dadosOperadoraPorEstado <- aggregate(x = dsVivo_PMDiario$mar.18, by = list(dsVivo_PMDiario$Unidade.Federativa),
-                                    FUN = mean)
-head(dadosOperadoraPorEstado)
+dsMediaVivo <- dsVivo_PMDiario %>% 
+  group_by(Unidade.Federativa) %>% 
+  summarise(jan_18 = mean(jan.18),
+            fev_18 = mean(fev.18),
+            mar_18 = mean(mar.18))
+head(dsMediaVivo)
+
 ggplot() +
-  geom_bar(data = dadosOperadoraPorEstado,
-           aes(x = Group.1, y = x), 
+  geom_bar(data = dsMediaVivo,
+           aes(x = Unidade.Federativa, y = mar_18), 
            stat = "identity", 
            color = "red", 
            fill = "orange"
-  ) + xlab("Empresa - Estados") + ylab("Mes - Mar/2018") + ggtitle("Qualidade Serviço SMP")
+  ) + xlab("Vivo - Estados") + ylab("Mes - Mar/2018") + ggtitle("Qualidade Serviço SMP")

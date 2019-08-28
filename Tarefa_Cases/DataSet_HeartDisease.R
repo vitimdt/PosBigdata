@@ -201,7 +201,7 @@ dfSuica[dfSuica$num > 0,]$num <- 1
 dfReduzido <- df[,c(1,2,3,14)]
 summary(dfReduzido)
 # Divide o dataframe em treinamento e teste, com taxa de 70% na coluna 'num'
-splitting = sample.split(dfReduzido$num, SplitRatio = 0.7)
+splitting = sample.split(dfReduzido$num, SplitRatio = 0.9)
 df_neuralnet_treinamento = subset(dfReduzido, splitting == TRUE)
 df_neuralnet_teste = subset(dfReduzido, splitting == FALSE)
 
@@ -220,7 +220,7 @@ print(table_prediction)
 
 accuracy_Test <- sum(diag(table_prediction)) / sum(table_prediction)
 accuracy_Test
-# Acurácia: 70%
+# Acurácia: 73%
 
 
 # Aplicando o dataset completo da Suiça no modelo de Redes Neurais para verificar o resultado
@@ -233,4 +233,4 @@ print(table_prediction)
 
 accuracy_Test <- sum(diag(table_prediction)) / sum(table_prediction)
 accuracy_Test
-# Acurácia: 82%
+# Acurácia: 77%

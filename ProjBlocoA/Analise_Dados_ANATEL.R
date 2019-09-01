@@ -11,6 +11,26 @@ library(reshape2)
 library(sjlabelled)
 
 ##################################################################################
+# Funções Úteis ##################################################################
+##################################################################################
+# Função para converter as variáveis Factor em valores Char
+unfactorize <- function(df){
+  for(i in which(sapply(df, class) == "factor")) df[[i]] = as.character(df[[i]])
+  return(df)
+}
+
+# Função para converter tipos de variáveis
+convert_types <- function(obj,types){
+  out <- lapply(1:length(obj),FUN = function(i){FUN1 <- 
+    switch(types[i],
+           character = as.character,
+           numeric = as.numeric,
+           factor = as.factor); FUN1(obj[,i])})
+  names(out) <- colnames(obj)
+  as.data.frame(out)
+}
+
+##################################################################################
 # Carregando dataset de Qualidade SMP ############################################
 ##################################################################################
 dsQualidade <- read.csv("Qualidades_Dados_SMP_Filtrado.csv", sep=";", dec=",")
@@ -130,16 +150,6 @@ ggplot() +
            fill = "orange"
   ) + xlab("Estados") + ylab("Mes - Mar/2018") + ggtitle("Qualidade Serviço SMP")
 
-# Ajustando os dados para gráfico
-dsQualidadeInvertidos <- melt(dsQualidadeAgrupPorEmpresaeUF,id=c("NomeFantasia","UF"))
-head(dsQualidadeInvertidos)
-
-# Criando o gráfico
-ggplot(dsQualidadeInvertidos[with(dsQualidadeInvertidos,NomeFantasia == 'Oi'),],
-       aes(x=variable,y=value,colour=UF,group=UF)) + 
-  geom_line() +
-  theme(axis.text.x = element_text(angle=90, hjust=1))
-
 
 # Ajustando as variáveis categoricas
 #dsQualidade$NomeFantasia <- factor(dsQualidade$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(0,1,2,3))
@@ -169,7 +179,7 @@ head(dsAssinantesAgrupPorEmpresaeUF)
 ##################################################################################
 # Carregando dataset de Reclamções SMP ###########################################
 ##################################################################################
-dsReclamacoes <- read.csv("ReclamaçõesANATEL/Reclamacoes_SMP_Consolidado_2018.csv", sep=";", dec=",")
+dsReclamacoes <- read.csv("ReclamaçõesANATEL/Reclamacoes_SMP_Consolidado_2018_v3.csv", sep=";", dec=",")
 
 summary(dsReclamacoes)
 str(dsReclamacoes)
@@ -183,21 +193,18 @@ summary(dsReclamacoesAgrupado)
 dsReclamacoesAgrupadoPorMeses <- distinct(dsReclamacoes, NomeFantasia, UF)
 
 dsFiltrado <- dsReclamacoesAgrupado[with(dsReclamacoesAgrupado, Ano == 2018 & Mes == 1), c(3,4,5)]
-summary(dsFiltrado)
 dsReclamacoesAgrupadoPorMeses <- 
   merge(x=dsReclamacoesAgrupadoPorMeses, y=dsFiltrado, by=c('NomeFantasia','UF'), all.x = TRUE)
 dsReclamacoesAgrupadoPorMeses$Rec_01_2018 <- dsReclamacoesAgrupadoPorMeses$QtdeReclamacoes
 dsReclamacoesAgrupadoPorMeses <- dsReclamacoesAgrupadoPorMeses[,c(-3)]
 
 dsFiltrado <- dsReclamacoesAgrupado[with(dsReclamacoesAgrupado, Ano == 2018 & Mes == 2), c(3,4,5)]
-summary(dsFiltrado)
 dsReclamacoesAgrupadoPorMeses <- 
   merge(x=dsReclamacoesAgrupadoPorMeses, y=dsFiltrado, by=c('NomeFantasia','UF'), all.x = TRUE)
 dsReclamacoesAgrupadoPorMeses$Rec_02_2018 <- dsReclamacoesAgrupadoPorMeses$QtdeReclamacoes
 dsReclamacoesAgrupadoPorMeses <- dsReclamacoesAgrupadoPorMeses[,c(-4)]
 
 dsFiltrado <- dsReclamacoesAgrupado[with(dsReclamacoesAgrupado, Ano == 2018 & Mes == 3), c(3,4,5)]
-summary(dsFiltrado)
 dsReclamacoesAgrupadoPorMeses <- 
   merge(x=dsReclamacoesAgrupadoPorMeses, y=dsFiltrado, by=c('NomeFantasia','UF'), all.x = TRUE)
 dsReclamacoesAgrupadoPorMeses$Rec_03_2018 <- dsReclamacoesAgrupadoPorMeses$QtdeReclamacoes
@@ -226,6 +233,110 @@ dsQualidadeComReclamacoes$PercRec_fev_2018 <-
 dsQualidadeComReclamacoes$PercRec_mar_2018 <- 
   ((with(dsQualidadeComReclamacoes, Rec_03_2018 * 100)) / dsQualidadeComReclamacoes$ass_mar_2018)
 
+# Transformando os valores das variáveis Factor em valores númericos
+dsQualidadeComReclamacoes$NomeFantasia <- factor(dsQualidadeComReclamacoes$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(1,2,3,4))
+
+dsQualidadeComReclamacoes$UF <- factor(dsQualidadeComReclamacoes$UF, levels=c('AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG',
+                                         'MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'),
+                                labels=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27))
+
+# Transformando variáveis Factor em Character no Dataframe
+dsQualidadeComReclamacoes <- unfactorize(dsQualidadeComReclamacoes)
+
+# Transformando todos os tipos das variáveis em Numeric
+types <- c("numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric",
+           "numeric","numeric","numeric")
+dsQualidadeComReclamacoes <- convert_types(dsQualidadeComReclamacoes, types)
+str(dsQualidadeComReclamacoes)
+summary(dsQualidadeComReclamacoes)
+
+
+dsQualidadeComReclamacoes <- dsQualidadeComReclamacoes[,c(-6,-7,-8)]
 # Gerando o gráfico de correlação entre as variáveis
 ggcorr(dsQualidadeComReclamacoes, palette = "RdBu", label = TRUE)
 
+
+# Executando o método do cotovelo com todas as variáveis para verificar um bom número de clusters
+kmean_withinss <- function(k) {
+  cluster <- kmeans(dsQualidadeComReclamacoes[,2:11], k)
+  return (cluster$tot.withinss)
+}
+# Set maximum cluster 
+max_k <-6
+# Run algorithm over a range of k 
+wss <- sapply(2:max_k, kmean_withinss)
+
+elbow <- data.frame(2:max_k, wss)
+
+# Plot the graph with gglop
+ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
+  scale_x_continuous(breaks = seq(1, 15, by = 1),labs(x='Número de Agrupamentos'))
+
+# Executar o Kmeans de todas as variáveis com 3 clusters
+km <- kmeans(dsQualidadeComReclamacoes[,2:11], 3, nstart=100)
+# Visualizando.
+plot(dsQualidadeComReclamacoes[,2:11], col=(km$cluster+1) , main="Resultado do K-médias com 4 agrupamentos", pch=20, cex=2)
+
+km$cluster <- as.factor(km$cluster)
+ggplot(dsQualidadeComReclamacoes, aes(x=Rec_03_2018, y=mar_18, color=km$cluster)) +
+  geom_point()
+
+
+
+##################################################################################
+# Criando Dataframes com valores invertidos ######################################
+##################################################################################
+# Ajustando o Dataframe de Qualidades ############################################
+dsQualidadeInvertidos <- melt(dsQualidadeAgrupPorEmpresaeUF,id=c("NomeFantasia","UF"))
+dsQualidadeInvertidos$variable <- factor(dsQualidadeInvertidos$variable, levels=c('jan_18', 'fev_18', 'mar_18'), 
+                                             labels=c('28-01-2018','28-02-2018','28-03-2018'))
+summary(dsQualidadeInvertidos)
+dsQualidadeInvertidos <- transform(dsQualidadeInvertidos,variable = as.character(variable))
+# Definindo novo nome de cabeçalho para as variáveis
+names(dsQualidadeInvertidos) <- c( "NomeFantasia", "UF", "Mes", "Qualidade")
+str(dsQualidadeInvertidos)
+
+# Criando o gráfico
+#ggplot(dsQualidadeInvertidos[with(dsQualidadeInvertidos,NomeFantasia == 'Claro'),],
+#       aes(x=variable,y=value,colour=UF,group=UF)) + 
+#  geom_line() +
+#  theme(axis.text.x = element_text(angle=90, hjust=1))
+
+
+# Ajustando o Dataframe de Assinantes ############################################
+dsAssinantesInvertidos <- melt(dsAssinantesAgrupPorEmpresaeUF,id=c("NomeFantasia","UF"))
+dsAssinantesInvertidos$variable <- factor(dsAssinantesInvertidos$variable, levels=c('ass_jan_2018', 'ass_fev_2018', 'ass_mar_2018'), 
+                                         labels=c('28-01-2018','28-02-2018','28-03-2018'))
+summary(dsAssinantesInvertidos)
+dsAssinantesInvertidos <- transform(dsAssinantesInvertidos,variable = as.character(variable))
+# Definindo novo nome de cabeçalho para as variáveis
+names(dsAssinantesInvertidos) <- c( "NomeFantasia", "UF", "Mes", "NumAssinantes")
+str(dsAssinantesInvertidos)
+
+
+# Ajustando o Dataframe de Reclamações ###########################################
+dsReclamacoesInvertidos <- melt(dsReclamacoesAgrupadoPorMeses,id=c("NomeFantasia","UF"))
+dsReclamacoesInvertidos$variable <- factor(dsReclamacoesInvertidos$variable, levels=c('Rec_01_2018', 'Rec_02_2018', 'Rec_03_2018'), 
+                                          labels=c('28-01-2018','28-02-2018','28-03-2018'))
+summary(dsReclamacoesInvertidos)
+dsReclamacoesInvertidos <- transform(dsReclamacoesInvertidos,variable = as.character(variable))
+# Definindo novo nome de cabeçalho para as variáveis
+names(dsReclamacoesInvertidos) <- c( "NomeFantasia", "UF", "Mes", "NumReclamacoes")
+str(dsReclamacoesInvertidos)
+
+
+# Merge dos Dataframes em um novo Dataframe ######################################
+dsIndicadoresPorEmprUFMes <- merge(x=dsQualidadeInvertidos, y=dsAssinantesInvertidos,
+                                   by=c('NomeFantasia','UF','Mes'), all.x = TRUE)
+dsIndicadoresPorEmprUFMes <- merge(x=dsIndicadoresPorEmprUFMes, y=dsReclamacoesInvertidos,
+                                   by=c('NomeFantasia','UF','Mes'), all.x = TRUE)
+dsIndicadoresPorEmprUFMes$PercReclamacoes <- 
+  (with(dsIndicadoresPorEmprUFMes, (NumReclamacoes * 100) / NumAssinantes))
+dsIndicadoresPorEmprUFMes$MesPOS <- as.POSIXlt(dsIndicadoresPorEmprUFMes$Mes, format='%d-%m-%Y')
+str(dsIndicadoresPorEmprUFMes)
+
+summary(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
+                                    dsIndicadoresPorEmprUFMes$UF == 'RJ',])
+ggplot(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
+                                   dsIndicadoresPorEmprUFMes$UF == 'RJ',], 
+       aes(x=Mes, y=Qualidade)) + geom_point()

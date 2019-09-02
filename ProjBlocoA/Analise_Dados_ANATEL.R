@@ -332,11 +332,14 @@ dsIndicadoresPorEmprUFMes <- merge(x=dsIndicadoresPorEmprUFMes, y=dsReclamacoesI
                                    by=c('NomeFantasia','UF','Mes'), all.x = TRUE)
 dsIndicadoresPorEmprUFMes$PercReclamacoes <- 
   (with(dsIndicadoresPorEmprUFMes, (NumReclamacoes * 100) / NumAssinantes))
-dsIndicadoresPorEmprUFMes$MesPOS <- as.POSIXlt(dsIndicadoresPorEmprUFMes$Mes, format='%d-%m-%Y')
+dsIndicadoresPorEmprUFMes$Mes <- as.POSIXct(dsIndicadoresPorEmprUFMes$Mes, format='%d-%m-%Y')
+dsIndicadoresPorEmprUFMes$MesNum <- as.integer(dsIndicadoresPorEmprUFMes$Mes)
 str(dsIndicadoresPorEmprUFMes)
 
 summary(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
                                     dsIndicadoresPorEmprUFMes$UF == 'RJ',])
 ggplot(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
                                    dsIndicadoresPorEmprUFMes$UF == 'RJ',], 
-       aes(x=Mes, y=Qualidade)) + geom_point()
+       aes(x=MesNum, y=Qualidade)) + geom_point()
+
+

@@ -3,12 +3,14 @@ setwd("D:/Pessoal/Projects/PosBigdata/ProjBlocoA")
 #install.packages('ggplot2', dependencies=TRUE)
 #install.packages('GGally', dependencies=TRUE)
 #install.packages(c('ggthemes', 'reshape2'))
+#install.packages('tsne')
 
 library(ggplot2)
 library(GGally)
 library(dplyr)
 library(reshape2)
 library(sjlabelled)
+library(tsne)
 
 ##################################################################################
 # Funções Úteis ##################################################################
@@ -144,20 +146,11 @@ dsQualidadeAgrupPorEmpresaeUF <- dsQualidade %>%
 head(dsQualidadeAgrupPorEmpresaeUF)
 
 ggplot() +
-  geom_bar(data = dsQualidadeAgrupPorEmpresaeUF[with(dsQualidadeAgrupPorEmpresaeUF,NomeFantasia == 'Oi'),],
+  geom_bar(data = dsQualidadeAgrupPorEmpresaeUF,
            aes(x = UF, y = mar_18), 
            stat = "identity",
            fill = "orange"
-  ) + xlab("Estados") + ylab("Mes - Mar/2018") + ggtitle("Qualidade Serviço SMP")
-
-
-# Ajustando as variáveis categoricas
-#dsQualidade$NomeFantasia <- factor(dsQualidade$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(0,1,2,3))
-#
-#dsQualidade$UF <- factor(dsQualidade$UF, levels=c('AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG',
-#                                         'MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'),
-#                                labels=c(0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26))
-#dsQualidade$Indicador <- factor(dsQualidade$Indicador, levels=c('SMP8','SMP10','SMP11D'), labels=c(0,1,2))
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Mar/2018") + ggtitle("Qualidade Serviço SMP")
 
 
 ##################################################################################
@@ -234,31 +227,43 @@ dsQualidadeComReclamacoes$PercRec_mar_2018 <-
   ((with(dsQualidadeComReclamacoes, Rec_03_2018 * 100)) / dsQualidadeComReclamacoes$ass_mar_2018)
 
 # Transformando os valores das variáveis Factor em valores númericos
-dsQualidadeComReclamacoes$NomeFantasia <- factor(dsQualidadeComReclamacoes$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(1,2,3,4))
+#dsQualidadeComReclamacoes$NomeFantasia <- factor(dsQualidadeComReclamacoes$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(1,2,3,4))
 
-dsQualidadeComReclamacoes$UF <- factor(dsQualidadeComReclamacoes$UF, levels=c('AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG',
-                                         'MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'),
-                                labels=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27))
+#dsQualidadeComReclamacoes$UF <- factor(dsQualidadeComReclamacoes$UF, levels=c('AC','AL','AM','AP','BA','CE','DF','ES','GO','MA','MG',
+#                                         'MS','MT','PA','PB','PE','PI','PR','RJ','RN','RO','RR','RS','SC','SE','SP','TO'),
+#                                labels=c(1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27))
 
 # Transformando variáveis Factor em Character no Dataframe
-dsQualidadeComReclamacoes <- unfactorize(dsQualidadeComReclamacoes)
+#dsQualidadeComReclamacoes <- unfactorize(dsQualidadeComReclamacoes)
 
 # Transformando todos os tipos das variáveis em Numeric
-types <- c("numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric",
-           "numeric","numeric","numeric")
-dsQualidadeComReclamacoes <- convert_types(dsQualidadeComReclamacoes, types)
+#types <- c("numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric","numeric",
+#           "numeric","numeric","numeric")
+#dsQualidadeComReclamacoes <- convert_types(dsQualidadeComReclamacoes, types)
 str(dsQualidadeComReclamacoes)
 summary(dsQualidadeComReclamacoes)
 
 
-dsQualidadeComReclamacoes <- dsQualidadeComReclamacoes[,c(-6,-7,-8)]
+#dsQualidadeComReclamacoes <- dsQualidadeComReclamacoes[,c(-6,-7,-8)]
 # Gerando o gráfico de correlação entre as variáveis
 ggcorr(dsQualidadeComReclamacoes, palette = "RdBu", label = TRUE)
 
 
+##################################################################################
+# Aplicando algoritmo de redução e clusterização #################################
+##################################################################################
+# Reduzindo as variáveis em duas
+tsne_reduction <- tsne(dsQualidadeComReclamacoes[,3:14], k = 2, perplexity = 30, epoch = 100)
+resultados <- as.data.frame(tsne_reduction)
+resultados$Empresa <- dsQualidadeComReclamacoes$NomeFantasia
+str(resultados)
+ggplot(data = resultados, aes(x = V1, y = V2)) +
+  geom_point(aes(color = Empresa)) + 
+  theme_bw()
+
 # Executando o método do cotovelo com todas as variáveis para verificar um bom número de clusters
 kmean_withinss <- function(k) {
-  cluster <- kmeans(dsQualidadeComReclamacoes[,2:11], k)
+  cluster <- kmeans(resultados[,-3], k)
   return (cluster$tot.withinss)
 }
 # Set maximum cluster 
@@ -272,13 +277,14 @@ elbow <- data.frame(2:max_k, wss)
 ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
   scale_x_continuous(breaks = seq(1, 15, by = 1),labs(x='Número de Agrupamentos'))
 
-# Executar o Kmeans de todas as variáveis com 3 clusters
-km <- kmeans(dsQualidadeComReclamacoes[,2:11], 3, nstart=100)
+# Executar o Kmeans de todas as variáveis com 4 clusters
+km <- kmeans(resultados[,-3], 4, nstart=100)
 # Visualizando.
-plot(dsQualidadeComReclamacoes[,2:11], col=(km$cluster+1) , main="Resultado do K-médias com 4 agrupamentos", pch=20, cex=2)
+plot(resultados[,-3], col=(km$cluster+1) ,
+     main="Resultado do K-médias com 4 agrupamentos", pch=20, cex=2)
 
 km$cluster <- as.factor(km$cluster)
-ggplot(dsQualidadeComReclamacoes, aes(x=Rec_03_2018, y=mar_18, color=km$cluster)) +
+ggplot(resultados, aes(x=V1, y=V2, color=km$cluster)) +
   geom_point()
 
 
@@ -341,5 +347,4 @@ summary(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Viv
 ggplot(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
                                    dsIndicadoresPorEmprUFMes$UF == 'RJ',], 
        aes(x=MesNum, y=Qualidade)) + geom_point()
-
 

@@ -47,79 +47,6 @@ str(dsQualidade)
 #dsQualidade <- replace(dsQualidade, dsQualidade=="NI", NA)
 
 dsQualidade$Media <- rowMeans(dsQualidade[,4:66], na.rm=TRUE)
-#dsQualidade$mai.12 <- ifelse(is.na(dsQualidade$mai.12), dsQualidade$Media, dsQualidade$mai.12)
-#dsQualidade$jun.12 <- ifelse(is.na(dsQualidade$jun.12), dsQualidade$Media, dsQualidade$jun.12)
-#dsQualidade$jul.12 <- ifelse(is.na(dsQualidade$jul.12), dsQualidade$Media, dsQualidade$jul.12)
-#dsQualidade$ago.12 <- ifelse(is.na(dsQualidade$ago.12), dsQualidade$Media, dsQualidade$ago.12)
-#dsQualidade$set.12 <- ifelse(is.na(dsQualidade$set.12), dsQualidade$Media, dsQualidade$set.12)
-#dsQualidade$out.12 <- ifelse(is.na(dsQualidade$out.12), dsQualidade$Media, dsQualidade$out.12)
-#dsQualidade$nov.12 <- ifelse(is.na(dsQualidade$nov.12), dsQualidade$Media, dsQualidade$nov.12)
-#dsQualidade$dez.12 <- ifelse(is.na(dsQualidade$dez.12), dsQualidade$Media, dsQualidade$dez.12)
-
-#dsQualidade$jan.13 <- ifelse(is.na(dsQualidade$jan.13), dsQualidade$Media, dsQualidade$jan.13)
-#dsQualidade$fev.13 <- ifelse(is.na(dsQualidade$fev.13), dsQualidade$Media, dsQualidade$fev.13)
-#dsQualidade$mar.13 <- ifelse(is.na(dsQualidade$mar.13), dsQualidade$Media, dsQualidade$mar.13)
-#dsQualidade$abr.13 <- ifelse(is.na(dsQualidade$abr.13), dsQualidade$Media, dsQualidade$abr.13)
-#dsQualidade$mai.13 <- ifelse(is.na(dsQualidade$mai.13), dsQualidade$Media, dsQualidade$mai.13)
-#dsQualidade$jun.13 <- ifelse(is.na(dsQualidade$jun.13), dsQualidade$Media, dsQualidade$jun.13)
-#dsQualidade$jul.13 <- ifelse(is.na(dsQualidade$jul.13), dsQualidade$Media, dsQualidade$jul.13)
-#dsQualidade$ago.13 <- ifelse(is.na(dsQualidade$ago.13), dsQualidade$Media, dsQualidade$ago.13)
-#dsQualidade$set.13 <- ifelse(is.na(dsQualidade$set.13), dsQualidade$Media, dsQualidade$set.13)
-#dsQualidade$out.13 <- ifelse(is.na(dsQualidade$out.13), dsQualidade$Media, dsQualidade$out.13)
-#dsQualidade$nov.13 <- ifelse(is.na(dsQualidade$nov.13), dsQualidade$Media, dsQualidade$nov.13)
-#dsQualidade$dez.13 <- ifelse(is.na(dsQualidade$dez.13), dsQualidade$Media, dsQualidade$dez.13)
-
-#dsQualidade$jan.14 <- ifelse(is.na(dsQualidade$jan.14), dsQualidade$Media, dsQualidade$jan.14)
-#dsQualidade$fev.14 <- ifelse(is.na(dsQualidade$fev.14), dsQualidade$Media, dsQualidade$fev.14)
-#dsQualidade$mar.14 <- ifelse(is.na(dsQualidade$mar.14), dsQualidade$Media, dsQualidade$mar.14)
-#dsQualidade$abr.14 <- ifelse(is.na(dsQualidade$abr.14), dsQualidade$Media, dsQualidade$abr.14)
-#dsQualidade$mai.14 <- ifelse(is.na(dsQualidade$mai.14), dsQualidade$Media, dsQualidade$mai.14)
-#dsQualidade$jun.14 <- ifelse(is.na(dsQualidade$jun.14), dsQualidade$Media, dsQualidade$jun.14)
-#dsQualidade$jul.14 <- ifelse(is.na(dsQualidade$jul.14), dsQualidade$Media, dsQualidade$jul.14)
-#dsQualidade$ago.14 <- ifelse(is.na(dsQualidade$ago.14), dsQualidade$Media, dsQualidade$ago.14)
-#dsQualidade$set.14 <- ifelse(is.na(dsQualidade$set.14), dsQualidade$Media, dsQualidade$set.14)
-#dsQualidade$out.14 <- ifelse(is.na(dsQualidade$out.14), dsQualidade$Media, dsQualidade$out.14)
-#dsQualidade$nov.14 <- ifelse(is.na(dsQualidade$nov.14), dsQualidade$Media, dsQualidade$nov.14)
-#dsQualidade$dez.14 <- ifelse(is.na(dsQualidade$dez.14), dsQualidade$Media, dsQualidade$dez.14)
-
-#dsQualidade$jan.15 <- ifelse(is.na(dsQualidade$jan.15), dsQualidade$Media, dsQualidade$jan.15)
-#dsQualidade$fev.15 <- ifelse(is.na(dsQualidade$fev.15), dsQualidade$Media, dsQualidade$fev.15)
-#dsQualidade$mar.15 <- ifelse(is.na(dsQualidade$mar.15), dsQualidade$Media, dsQualidade$mar.15)
-#dsQualidade$abr.15 <- ifelse(is.na(dsQualidade$abr.15), dsQualidade$Media, dsQualidade$abr.15)
-#dsQualidade$mai.15 <- ifelse(is.na(dsQualidade$mai.15), dsQualidade$Media, dsQualidade$mai.15)
-#dsQualidade$jun.15 <- ifelse(is.na(dsQualidade$jun.15), dsQualidade$Media, dsQualidade$jun.15)
-#dsQualidade$jul.15 <- ifelse(is.na(dsQualidade$jul.15), dsQualidade$Media, dsQualidade$jul.15)
-#dsQualidade$ago.15 <- ifelse(is.na(dsQualidade$ago.15), dsQualidade$Media, dsQualidade$ago.15)
-#dsQualidade$set.15 <- ifelse(is.na(dsQualidade$set.15), dsQualidade$Media, dsQualidade$set.15)
-#dsQualidade$out.15 <- ifelse(is.na(dsQualidade$out.15), dsQualidade$Media, dsQualidade$out.15)
-#dsQualidade$nov.15 <- ifelse(is.na(dsQualidade$nov.15), dsQualidade$Media, dsQualidade$nov.15)
-#dsQualidade$dez.15 <- ifelse(is.na(dsQualidade$dez.15), dsQualidade$Media, dsQualidade$dez.15)
-
-#dsQualidade$jan.16 <- ifelse(is.na(dsQualidade$jan.16), dsQualidade$Media, dsQualidade$jan.16)
-#dsQualidade$fev.16 <- ifelse(is.na(dsQualidade$fev.16), dsQualidade$Media, dsQualidade$fev.16)
-#dsQualidade$mar.16 <- ifelse(is.na(dsQualidade$mar.16), dsQualidade$Media, dsQualidade$mar.16)
-#dsQualidade$abr.16 <- ifelse(is.na(dsQualidade$abr.16), dsQualidade$Media, dsQualidade$abr.16)
-#dsQualidade$mai.16 <- ifelse(is.na(dsQualidade$mai.16), dsQualidade$Media, dsQualidade$mai.16)
-#dsQualidade$jun.16 <- ifelse(is.na(dsQualidade$jun.16), dsQualidade$Media, dsQualidade$jun.16)
-#dsQualidade$jul.16 <- ifelse(is.na(dsQualidade$jul.16), dsQualidade$Media, dsQualidade$jul.16)
-#dsQualidade$ago.16 <- ifelse(is.na(dsQualidade$ago.16), dsQualidade$Media, dsQualidade$ago.16)
-#dsQualidade$set.16 <- ifelse(is.na(dsQualidade$set.16), dsQualidade$Media, dsQualidade$set.16)
-#dsQualidade$out.16 <- ifelse(is.na(dsQualidade$out.16), dsQualidade$Media, dsQualidade$out.16)
-#dsQualidade$nov.16 <- ifelse(is.na(dsQualidade$nov.16), dsQualidade$Media, dsQualidade$nov.16)
-#dsQualidade$dez.16 <- ifelse(is.na(dsQualidade$dez.16), dsQualidade$Media, dsQualidade$dez.16)
-
-#dsQualidade$jan.17 <- ifelse(is.na(dsQualidade$jan.17), dsQualidade$Media, dsQualidade$jan.17)
-#dsQualidade$fev.17 <- ifelse(is.na(dsQualidade$fev.17), dsQualidade$Media, dsQualidade$fev.17)
-#dsQualidade$mar.17 <- ifelse(is.na(dsQualidade$mar.17), dsQualidade$Media, dsQualidade$mar.17)
-#dsQualidade$abr.17 <- ifelse(is.na(dsQualidade$abr.17), dsQualidade$Media, dsQualidade$abr.17)
-#dsQualidade$mai.17 <- ifelse(is.na(dsQualidade$mai.17), dsQualidade$Media, dsQualidade$mai.17)
-#dsQualidade$jun.17 <- ifelse(is.na(dsQualidade$jun.17), dsQualidade$Media, dsQualidade$jun.17)
-#dsQualidade$jul.17 <- ifelse(is.na(dsQualidade$jul.17), dsQualidade$Media, dsQualidade$jul.17)
-#dsQualidade$ago.17 <- ifelse(is.na(dsQualidade$ago.17), dsQualidade$Media, dsQualidade$ago.17)
-#dsQualidade$set.17 <- ifelse(is.na(dsQualidade$set.17), dsQualidade$Media, dsQualidade$set.17)
-#dsQualidade$out.17 <- ifelse(is.na(dsQualidade$out.17), dsQualidade$Media, dsQualidade$out.17)
-#dsQualidade$nov.17 <- ifelse(is.na(dsQualidade$nov.17), dsQualidade$Media, dsQualidade$nov.17)
-#dsQualidade$dez.17 <- ifelse(is.na(dsQualidade$dez.17), dsQualidade$Media, dsQualidade$dez.17)
 
 dsQualidade$jan.18 <- ifelse(is.na(dsQualidade$jan.18), dsQualidade$Media, dsQualidade$jan.18)
 dsQualidade$fev.18 <- ifelse(is.na(dsQualidade$fev.18), dsQualidade$Media, dsQualidade$fev.18)
@@ -130,18 +57,6 @@ summary(dsQualidade)
 dsQualidadeAgrupPorEmpresaeUF <- dsQualidade %>% 
   group_by(NomeFantasia, UF) %>% 
   summarise(
-    #mai_12 = mean(mai.12), jun_12 = mean(jun.12),
-    #jul_12 = mean(jul.12), ago_12 = mean(ago.12), set_12 = mean(set.12), out_12 = mean(out.12), nov_12 = mean(nov.12), dez_12 = mean(dez.12),
-    #jan_13 = mean(jan.13), fev_13 = mean(fev.13), mar_13 = mean(mar.13), abr_13 = mean(abr.13), mai_13 = mean(mai.13), jun_13 = mean(jun.13),
-    #jul_13 = mean(jul.13), ago_13 = mean(ago.13), set_13 = mean(set.13), out_13 = mean(out.13), nov_13 = mean(nov.13), dez_13 = mean(dez.13),
-    #jan_14 = mean(jan.14), fev_14 = mean(fev.14), mar_14 = mean(mar.14), abr_14 = mean(abr.14), mai_14 = mean(mai.14), jun_14 = mean(jun.14),
-    #jul_14 = mean(jul.14), ago_14 = mean(ago.14), set_14 = mean(set.14), out_14 = mean(out.14), nov_14 = mean(nov.14), dez_14 = mean(dez.14),
-    #jan_15 = mean(jan.15), fev_15 = mean(fev.15), mar_15 = mean(mar.15), abr_15 = mean(abr.15), mai_15 = mean(mai.15), jun_15 = mean(jun.15),
-    #jul_15 = mean(jul.15), ago_15 = mean(ago.15), set_15 = mean(set.15), out_15 = mean(out.15), nov_15 = mean(nov.15), dez_15 = mean(dez.15),
-    #jan_16 = mean(jan.16), fev_16 = mean(fev.16), mar_16 = mean(mar.16), abr_16 = mean(abr.16), mai_16 = mean(mai.16), jun_16 = mean(jun.16),
-    #jul_16 = mean(jul.16), ago_16 = mean(ago.16), set_16 = mean(set.16), out_16 = mean(out.16), nov_16 = mean(nov.16), dez_16 = mean(dez.16),
-    #jan_17 = mean(jan.17), fev_17 = mean(fev.17), mar_17 = mean(mar.17), abr_17 = mean(abr.17), mai_17 = mean(mai.17), jun_17 = mean(jun.17),
-    #jul_17 = mean(jul.17), ago_17 = mean(ago.17), set_17 = mean(set.17), out_17 = mean(out.17), nov_17 = mean(nov.17), dez_17 = mean(dez.17),
     jan_18 = mean(jan.18), fev_18 = mean(fev.18), mar_18 = mean(mar.18))
 head(dsQualidadeAgrupPorEmpresaeUF)
 
@@ -168,6 +83,12 @@ dsAssinantesAgrupPorEmpresaeUF <- dsAssinantes %>%
   summarise(ass_jan_2018 = sum(X01.01.2018), ass_fev_2018 = sum(X01.02.2018), ass_mar_2018 = sum(X01.03.2018))
 head(dsAssinantesAgrupPorEmpresaeUF)
 
+ggplot() +
+  geom_bar(data = dsAssinantesAgrupPorEmpresaeUF,
+           aes(x = UF, y = ass_mar_2018), 
+           stat = "identity",
+           fill = "orange"
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Mar/2018") + ggtitle("Quantidade Assinantes SMP")
 
 ##################################################################################
 # Carregando dataset de Reclamções SMP ###########################################
@@ -207,7 +128,12 @@ summary(dsReclamacoesAgrupadoPorMeses)
 
 dsReclamacoesAgrupadoPorMeses <- replace(dsReclamacoesAgrupadoPorMeses, is.na(dsReclamacoesAgrupadoPorMeses), 0)
 
-
+ggplot() +
+  geom_bar(data = dsReclamacoesAgrupadoPorMeses,
+           aes(x = UF, y = Rec_03_2018), 
+           stat = "identity",
+           fill = "orange"
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Mar/2018") + ggtitle("Reclamações ANATEL - SMP")
 
 ##################################################################################
 # Juntando os Dataframes #########################################################
@@ -225,6 +151,30 @@ dsQualidadeComReclamacoes$PercRec_fev_2018 <-
   ((with(dsQualidadeComReclamacoes, Rec_02_2018 * 100)) / dsQualidadeComReclamacoes$ass_fev_2018)
 dsQualidadeComReclamacoes$PercRec_mar_2018 <- 
   ((with(dsQualidadeComReclamacoes, Rec_03_2018 * 100)) / dsQualidadeComReclamacoes$ass_mar_2018)
+
+# Percentual de reclamações por Operadora
+ggplot() +
+  geom_bar(data = dsQualidadeComReclamacoes,
+           aes(x = UF, y = PercRec_jan_2018), 
+           stat = "identity",
+           fill = "orange"
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Jan/2018") + ggtitle("Reclamações (%) ANATEL - SMP")
+
+# Percentual de reclamações por Operadora
+ggplot() +
+  geom_bar(data = dsQualidadeComReclamacoes,
+           aes(x = UF, y = PercRec_fev_2018), 
+           stat = "identity",
+           fill = "orange"
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Fev/2018") + ggtitle("Reclamações (%) ANATEL - SMP")
+
+# Percentual de reclamações por Operadora
+ggplot() +
+  geom_bar(data = dsQualidadeComReclamacoes,
+           aes(x = UF, y = PercRec_mar_2018), 
+           stat = "identity",
+           fill = "orange"
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("Mar/2018") + ggtitle("Reclamações (%) ANATEL - SMP")
 
 # Transformando os valores das variáveis Factor em valores númericos
 #dsQualidadeComReclamacoes$NomeFantasia <- factor(dsQualidadeComReclamacoes$NomeFantasia, levels=c('Claro', 'Oi', 'Tim', 'Vivo'), labels=c(1,2,3,4))
@@ -248,22 +198,24 @@ summary(dsQualidadeComReclamacoes)
 # Gerando o gráfico de correlação entre as variáveis
 ggcorr(dsQualidadeComReclamacoes, palette = "RdBu", label = TRUE)
 
-
 ##################################################################################
 # Aplicando algoritmo de redução e clusterização #################################
 ##################################################################################
+# Setando a semente
+set.seed(18140)
+
 # Reduzindo as variáveis em duas
 tsne_reduction <- tsne(dsQualidadeComReclamacoes[,3:14], k = 2, perplexity = 30, epoch = 100)
-resultados <- as.data.frame(tsne_reduction)
-resultados$Empresa <- dsQualidadeComReclamacoes$NomeFantasia
-str(resultados)
-ggplot(data = resultados, aes(x = V1, y = V2)) +
+dfReduction <- as.data.frame(tsne_reduction)
+dfReduction$Empresa <- dsQualidadeComReclamacoes$NomeFantasia
+str(dfReduction)
+ggplot(data = dfReduction, aes(x = V1, y = V2)) +
   geom_point(aes(color = Empresa)) + 
   theme_bw()
 
 # Executando o método do cotovelo com todas as variáveis para verificar um bom número de clusters
 kmean_withinss <- function(k) {
-  cluster <- kmeans(resultados[,-3], k)
+  cluster <- kmeans(dfReduction[,-3], k)
   return (cluster$tot.withinss)
 }
 # Set maximum cluster 
@@ -278,73 +230,11 @@ ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
   scale_x_continuous(breaks = seq(1, 15, by = 1),labs(x='Número de Agrupamentos'))
 
 # Executar o Kmeans de todas as variáveis com 4 clusters
-km <- kmeans(resultados[,-3], 4, nstart=100)
+km <- kmeans(dfReduction[,-3], 4, nstart=100)
 # Visualizando.
-plot(resultados[,-3], col=(km$cluster+1) ,
+plot(dfReduction[,-3], col=(km$cluster+1) ,
      main="Resultado do K-médias com 4 agrupamentos", pch=20, cex=2)
 
 km$cluster <- as.factor(km$cluster)
-ggplot(resultados, aes(x=V1, y=V2, color=km$cluster)) +
+ggplot(dfReduction, aes(x=V1, y=V2, color=km$cluster)) +
   geom_point()
-
-
-
-##################################################################################
-# Criando Dataframes com valores invertidos ######################################
-##################################################################################
-# Ajustando o Dataframe de Qualidades ############################################
-dsQualidadeInvertidos <- melt(dsQualidadeAgrupPorEmpresaeUF,id=c("NomeFantasia","UF"))
-dsQualidadeInvertidos$variable <- factor(dsQualidadeInvertidos$variable, levels=c('jan_18', 'fev_18', 'mar_18'), 
-                                             labels=c('28-01-2018','28-02-2018','28-03-2018'))
-summary(dsQualidadeInvertidos)
-dsQualidadeInvertidos <- transform(dsQualidadeInvertidos,variable = as.character(variable))
-# Definindo novo nome de cabeçalho para as variáveis
-names(dsQualidadeInvertidos) <- c( "NomeFantasia", "UF", "Mes", "Qualidade")
-str(dsQualidadeInvertidos)
-
-# Criando o gráfico
-#ggplot(dsQualidadeInvertidos[with(dsQualidadeInvertidos,NomeFantasia == 'Claro'),],
-#       aes(x=variable,y=value,colour=UF,group=UF)) + 
-#  geom_line() +
-#  theme(axis.text.x = element_text(angle=90, hjust=1))
-
-
-# Ajustando o Dataframe de Assinantes ############################################
-dsAssinantesInvertidos <- melt(dsAssinantesAgrupPorEmpresaeUF,id=c("NomeFantasia","UF"))
-dsAssinantesInvertidos$variable <- factor(dsAssinantesInvertidos$variable, levels=c('ass_jan_2018', 'ass_fev_2018', 'ass_mar_2018'), 
-                                         labels=c('28-01-2018','28-02-2018','28-03-2018'))
-summary(dsAssinantesInvertidos)
-dsAssinantesInvertidos <- transform(dsAssinantesInvertidos,variable = as.character(variable))
-# Definindo novo nome de cabeçalho para as variáveis
-names(dsAssinantesInvertidos) <- c( "NomeFantasia", "UF", "Mes", "NumAssinantes")
-str(dsAssinantesInvertidos)
-
-
-# Ajustando o Dataframe de Reclamações ###########################################
-dsReclamacoesInvertidos <- melt(dsReclamacoesAgrupadoPorMeses,id=c("NomeFantasia","UF"))
-dsReclamacoesInvertidos$variable <- factor(dsReclamacoesInvertidos$variable, levels=c('Rec_01_2018', 'Rec_02_2018', 'Rec_03_2018'), 
-                                          labels=c('28-01-2018','28-02-2018','28-03-2018'))
-summary(dsReclamacoesInvertidos)
-dsReclamacoesInvertidos <- transform(dsReclamacoesInvertidos,variable = as.character(variable))
-# Definindo novo nome de cabeçalho para as variáveis
-names(dsReclamacoesInvertidos) <- c( "NomeFantasia", "UF", "Mes", "NumReclamacoes")
-str(dsReclamacoesInvertidos)
-
-
-# Merge dos Dataframes em um novo Dataframe ######################################
-dsIndicadoresPorEmprUFMes <- merge(x=dsQualidadeInvertidos, y=dsAssinantesInvertidos,
-                                   by=c('NomeFantasia','UF','Mes'), all.x = TRUE)
-dsIndicadoresPorEmprUFMes <- merge(x=dsIndicadoresPorEmprUFMes, y=dsReclamacoesInvertidos,
-                                   by=c('NomeFantasia','UF','Mes'), all.x = TRUE)
-dsIndicadoresPorEmprUFMes$PercReclamacoes <- 
-  (with(dsIndicadoresPorEmprUFMes, (NumReclamacoes * 100) / NumAssinantes))
-dsIndicadoresPorEmprUFMes$Mes <- as.POSIXct(dsIndicadoresPorEmprUFMes$Mes, format='%d-%m-%Y')
-dsIndicadoresPorEmprUFMes$MesNum <- as.integer(dsIndicadoresPorEmprUFMes$Mes)
-str(dsIndicadoresPorEmprUFMes)
-
-summary(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
-                                    dsIndicadoresPorEmprUFMes$UF == 'RJ',])
-ggplot(dsIndicadoresPorEmprUFMes[dsIndicadoresPorEmprUFMes$NomeFantasia == 'Vivo' &
-                                   dsIndicadoresPorEmprUFMes$UF == 'RJ',], 
-       aes(x=MesNum, y=Qualidade)) + geom_point()
-

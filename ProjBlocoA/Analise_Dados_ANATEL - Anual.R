@@ -377,16 +377,14 @@ ggcorr(dsQualidadeComReclamacoes, palette = "RdBu", label = TRUE)
 # Aplicando algoritmo de redução e clusterização #################################
 ##################################################################################
 # Setando a semente
-set.seed(20190908)
+#set.seed(20190908)
+set.seed(12092019)
 
-# Reduzindo as variáveis em duas
-tsne_reduction <- tsne(dsQualidadeComReclamacoes[,3:14], k = 2, perplexity = 30, epoch = 100)
+# Reduzindo as variáveis em duas, considerando a média do ano de 2018 e retirando as variáveis de quantidade de
+# assinantes
+tsne_reduction <- tsne(dsQualidadeComReclamacoes[,c(-1,-2,-3,-4,-6,-7,-8,-9,-10,-12,-13)], k = 2, perplexity = 30, epoch = 100)
 resultados <- as.data.frame(tsne_reduction)
 resultados$Empresa <- dsQualidadeComReclamacoes$NomeFantasia
-resultados$media_2018 <- dsQualidadeComReclamacoes$media_2018
-resultados$ass_media_2018 <- dsQualidadeComReclamacoes$ass_media_2018
-resultados$recl_media_2018 <- dsQualidadeComReclamacoes$recl_media_2018
-resultados$PercRec_2018 <- dsQualidadeComReclamacoes$PercRec_2018
 str(resultados)
 ggplot(data = resultados, aes(x = V1, y = V2)) +
   geom_point(aes(color = Empresa)) + 
@@ -414,7 +412,7 @@ ggplot(elbow, aes(x=X2.max_k, y=wss)) + geom_point() + geom_line() +
 km <- kmeans(resultados[,1:2], 4, nstart=100)
 # Visualizando.
 plot(resultados[,1:2], col=(km$cluster+1) ,
-     main="Resultado do K-médias com 4 agrupamentos", pch=20, cex=2)
+     main="Resultado do K-means com 4 agrupamentos", pch=20, cex=2)
 
 km$cluster <- as.factor(km$cluster)
 ggplot(resultados, aes(x=V1, y=V2, color=km$cluster)) +

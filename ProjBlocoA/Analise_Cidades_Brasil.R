@@ -6,6 +6,8 @@ setwd("D:/Pessoal/Projects/PosBigdata/ProjBlocoA")
 library(ggplot2)
 library(GGally)
 library(dplyr)
+library(ggthemes)
+library(grid)
 
 
 ##################################################################################
@@ -74,4 +76,120 @@ ggplot(dsCities, aes(x = STATE, fill=SUPORTE_4G)) +
   geom_histogram(stat="count", color ='black', alpha=.7) +
   xlab("Cidades por UF") + ylab("Frequência") + 
   ggtitle("Histograma de Cidades com suporte a 4G por estado") +
+  theme_gray()
+
+
+# Definindo qual tecnologia de dados móveis por Operadora (Operadora Oi)
+dsCities$SUPORTE_OI <- ifelse(dsCities$OI_2G == 1 & dsCities$OI_3G == 0 & dsCities$OI_4G == 0, 2,
+                              ifelse(dsCities$OI_2G == 1 & dsCities$OI_3G == 1 & dsCities$OI_4G == 0, 3,
+                                     ifelse(dsCities$OI_2G == 1 & dsCities$OI_3G == 1 & dsCities$OI_4G == 1, 4, 0)))
+# Definindo qual tecnologia de dados móveis por Operadora (Operadora NEXTEL)
+dsCities$SUPORTE_NEXTEL <- ifelse(dsCities$NEXTEL_2G == 1 & dsCities$NEXTEL_3G == 0 & dsCities$NEXTEL_4G == 0, 2,
+                                ifelse(dsCities$NEXTEL_2G == 1 & dsCities$NEXTEL_3G == 1 & dsCities$NEXTEL_4G == 0, 3,
+                                     ifelse(dsCities$NEXTEL_2G == 1 & dsCities$NEXTEL_3G == 1 & dsCities$NEXTEL_4G == 1, 4, 0)))
+# Definindo qual tecnologia de dados móveis por Operadora (Operadora Vivo)
+dsCities$SUPORTE_VIVO <- ifelse(dsCities$VIVO_2G == 1 & dsCities$VIVO_3G == 0 & dsCities$VIVO_4G == 0, 2,
+                                  ifelse(dsCities$VIVO_2G == 1 & dsCities$VIVO_3G == 1 & dsCities$VIVO_4G == 0, 3,
+                                         ifelse(dsCities$VIVO_2G == 1 & dsCities$VIVO_3G == 1 & dsCities$VIVO_4G == 1, 4, 0)))
+# Definindo qual tecnologia de dados móveis por Operadora (Operadora Tim)
+dsCities$SUPORTE_TIM <- ifelse(dsCities$TIM_2G == 1 & dsCities$TIM_3G == 0 & dsCities$TIM_4G == 0, 2,
+                                ifelse(dsCities$TIM_2G == 1 & dsCities$TIM_3G == 1 & dsCities$TIM_4G == 0, 3,
+                                       ifelse(dsCities$TIM_2G == 1 & dsCities$TIM_3G == 1 & dsCities$TIM_4G == 1, 4, 0)))
+# Definindo qual tecnologia de dados móveis por Operadora (Operadora Tim)
+dsCities$SUPORTE_CLARO <- ifelse(dsCities$CLARO_2G == 1 & dsCities$CLARO_3G == 0 & dsCities$CLARO_4G == 0, 2,
+                               ifelse(dsCities$CLARO_2G == 1 & dsCities$CLARO_3G == 1 & dsCities$CLARO_4G == 0, 3,
+                                      ifelse(dsCities$CLARO_2G == 1 & dsCities$CLARO_3G == 1 & dsCities$CLARO_4G == 1, 4, 0)))
+dsCities$SUPORTE_OI <- factor(dsCities$SUPORTE_OI, labels=c('SEM COBERTURA','2G','3G','4G'), levels = c(0,2,3,4))
+dsCities$SUPORTE_NEXTEL <- factor(dsCities$SUPORTE_NEXTEL, labels=c('SEM COBERTURA','2G','3G','4G'), levels = c(0,2,3,4))
+dsCities$SUPORTE_VIVO <- factor(dsCities$SUPORTE_VIVO, labels=c('SEM COBERTURA','2G','3G','4G'), levels = c(0,2,3,4))
+dsCities$SUPORTE_TIM <- factor(dsCities$SUPORTE_TIM, labels=c('SEM COBERTURA','2G','3G','4G'), levels = c(0,2,3,4))
+dsCities$SUPORTE_CLARO <- factor(dsCities$SUPORTE_CLARO, labels=c('SEM COBERTURA','2G','3G','4G'), levels = c(0,2,3,4))
+dsCities <- dsCities[,c(-83,-84,-85,-86,-87,-88,-89,-90,-91,-92,-93,-94,-95,-96,-97)]
+summary(dsCities)
+
+# Boxplot do Suporte de dados móvel da OI por IDHM
+ggplot(data=dsCities, aes(x=SUPORTE_OI, y=IDHM)) +
+  geom_boxplot(aes(fill=SUPORTE_OI)) + 
+  xlab("Suporte Dados Móvel OI") + ylab("IDHM") + 
+  ggtitle("Boxplot do Suporte de dados móvel da OI por IDHM") +
+  theme_solarized()
+
+# Boxplot do Suporte de dados móvel da OI por IDHM Renda
+ggplot(data=dsCities, aes(x=SUPORTE_OI, y=IDHM_Renda)) +
+  geom_boxplot(aes(fill=SUPORTE_OI)) + 
+  xlab("Suporte Dados Móvel OI") + ylab("IDHM Renda") + 
+  ggtitle("Boxplot do Suporte de dados móvel da OI por IDHM Renda") +
+  theme_solarized()
+
+# Histograma de Cidades com suporte da OI por estado
+ggplot(dsCities, aes(x = STATE, fill=SUPORTE_OI)) +
+  geom_histogram(stat="count", color ='black', alpha=.7) +
+  xlab("Cidades por UF") + ylab("Frequência") + 
+  ggtitle("Histograma de Cidades com suporte de dados móveis da OI por estado") +
+  theme_gray()
+
+
+# Boxplot do Suporte de dados móvel da TIM por IDHM
+ggplot(data=dsCities, aes(x=SUPORTE_TIM, y=IDHM)) +
+  geom_boxplot(aes(fill=SUPORTE_TIM)) + 
+  xlab("Suporte Dados Móvel TIM") + ylab("IDHM") + 
+  ggtitle("Boxplot do Suporte de dados móvel da TIM por IDHM") +
+  theme_solarized()
+
+# Boxplot do Suporte de dados móvel da TIM por IDHM Renda
+ggplot(data=dsCities, aes(x=SUPORTE_TIM, y=IDHM_Renda)) +
+  geom_boxplot(aes(fill=SUPORTE_TIM)) + 
+  xlab("Suporte Dados Móvel TIM") + ylab("IDHM Renda") + 
+  ggtitle("Boxplot do Suporte de dados móvel da TIM por IDHM Renda") +
+  theme_solarized()
+
+# Histograma de Cidades com suporte da TIM por estado
+ggplot(dsCities, aes(x = STATE, fill=SUPORTE_TIM)) +
+  geom_histogram(stat="count", color ='black', alpha=.7) +
+  xlab("Cidades por UF") + ylab("Frequência") + 
+  ggtitle("Histograma de Cidades com suporte de dados móveis da TIM por estado") +
+  theme_gray()
+
+
+# Boxplot do Suporte de dados móvel da VIVO por IDHM
+ggplot(data=dsCities, aes(x=SUPORTE_VIVO, y=IDHM)) +
+  geom_boxplot(aes(fill=SUPORTE_VIVO)) + 
+  xlab("Suporte Dados Móvel VIVO") + ylab("IDHM") + 
+  ggtitle("Boxplot do Suporte de dados móvel da VIVO por IDHM") +
+  theme_solarized()
+
+# Boxplot do Suporte de dados móvel da VIVO por IDHM Renda
+ggplot(data=dsCities, aes(x=SUPORTE_VIVO, y=IDHM_Renda)) +
+  geom_boxplot(aes(fill=SUPORTE_VIVO)) + 
+  xlab("Suporte Dados Móvel VIVO") + ylab("IDHM Renda") + 
+  ggtitle("Boxplot do Suporte de dados móvel da VIVO por IDHM Renda") +
+  theme_solarized()
+
+# Histograma de Cidades com suporte da VIVO por estado
+ggplot(dsCities, aes(x = STATE, fill=SUPORTE_VIVO)) +
+  geom_histogram(stat="count", color ='black', alpha=.7) +
+  xlab("Cidades por UF") + ylab("Frequência") + 
+  ggtitle("Histograma de Cidades com suporte de dados móveis da VIVO por estado") +
+  theme_gray()
+
+
+# Boxplot do Suporte de dados móvel da Claro por IDHM
+ggplot(data=dsCities, aes(x=SUPORTE_CLARO, y=IDHM)) +
+  geom_boxplot(aes(fill=SUPORTE_CLARO)) + 
+  xlab("Suporte Dados Móvel CLARO") + ylab("IDHM") + 
+  ggtitle("Boxplot do Suporte de dados móvel da CLARO por IDHM") +
+  theme_solarized()
+
+# Boxplot do Suporte de dados móvel da CLARO por IDHM Renda
+ggplot(data=dsCities, aes(x=SUPORTE_CLARO, y=IDHM_Renda)) +
+  geom_boxplot(aes(fill=SUPORTE_CLARO)) + 
+  xlab("Suporte Dados Móvel CLARO") + ylab("IDHM Renda") + 
+  ggtitle("Boxplot do Suporte de dados móvel da CLARO por IDHM Renda") +
+  theme_solarized()
+
+# Histograma de Cidades com suporte da CLARO por estado
+ggplot(dsCities, aes(x = STATE, fill=SUPORTE_CLARO)) +
+  geom_histogram(stat="count", color ='black', alpha=.7) +
+  xlab("Cidades por UF") + ylab("Frequência") + 
+  ggtitle("Histograma de Cidades com suporte de dados móveis da CLARO por estado") +
   theme_gray()

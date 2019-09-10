@@ -2,12 +2,21 @@ setwd("D:/Pessoal/Projects/PosBigdata/ProjBlocoA")
 
 #install.packages('ggplot2', dependencies=TRUE)
 #install.packages('GGally', dependencies=TRUE)
+#install.packages('caret', dependencies = TRUE)
+#install.packages('party', dependencies=TRUE)
+#install.packages('rpart', dependencies=TRUE)
+#install.packages('rpart.plot', dependencies=TRUE)
 
 library(ggplot2)
 library(GGally)
 library(dplyr)
 library(ggthemes)
 library(grid)
+library(caTools)
+library(caret)
+library(party)
+library(rpart)
+library(rpart.plot)
 
 
 ##################################################################################
@@ -193,3 +202,43 @@ ggplot(dsCities, aes(x = STATE, fill=SUPORTE_CLARO)) +
   xlab("Cidades por UF") + ylab("Frequência") + 
   ggtitle("Histograma de Cidades com suporte de dados móveis da CLARO por estado") +
   theme_gray()
+
+
+# Gerando o gráfico de correlação entre as variáveis
+ggcorr(dsCities[,c(5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24)], palette = "RdBu", label = TRUE)
+
+# Gerando o gráfico de correlação entre as variáveis
+ggcorr(dsCities[,c(20,21,22,23,24,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45)], palette = "RdBu", label = TRUE)
+
+# Gerando o gráfico de correlação entre as variáveis
+ggcorr(dsCities[,c(20,21,22,23,24,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66)], palette = "RdBu", label = TRUE)
+
+dsCitiesNew <- dsCities[,c(-5,-6,-7,-8,-9,-10,-11,-12,-13,-14,-15,-16,-17,-18,-19,
+                           -46,-47,-48,-49,-50,-51,-52,-53,-54,-55,-56,-57,-58,-59,-60,-61,-62,-63,-64,-65,-66)]
+
+str(dsCitiesNew)
+
+
+### Árvore de Decisão ###
+
+# Divide o dataframe em treinamento e teste, com taxa de 70% na coluna 'SUPORTE_OI'
+dfCitiesSuporte_OI <- dsCitiesNew[,c(-1,-2,-3,-4,-10,-11,-15,-16,-17,-19,-29,-38,-39,-47,-48,-49,-51,-52,-53,-54)]
+str(dfCitiesSuporte_OI)
+splitting = sample.split(dfCitiesSuporte_OI$SUPORTE_OI, SplitRatio = 0.7)
+df_arvore_treinamento= subset(dfCitiesSuporte_OI, splitting == TRUE)
+df_arvore_teste = subset(dfCitiesSuporte_OI, splitting == FALSE)
+
+# Classificação
+classifier <- rpart(formula = SUPORTE_OI ~ ., data = df_arvore_treinamento)
+print(classifier)
+rpart.plot(classifier)
+
+# Previsão
+prediction <- predict(classifier, newdata = df_arvore_teste[,-34], type = 'class')
+print(prediction)
+
+# Matriz de confusão
+table_prediction <- table(df_arvore_teste[,34],prediction)
+print(table_prediction)
+confusionMatrix(table_prediction)
+# Acurácia: 61%

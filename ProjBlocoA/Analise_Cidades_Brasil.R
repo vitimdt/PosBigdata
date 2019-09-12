@@ -221,10 +221,11 @@ str(dsCitiesNew)
 
 ### Árvore de Decisão ###
 
-# Divide o dataframe em treinamento e teste, com taxa de 70% na coluna 'SUPORTE_OI'
-dfCitiesSuporte_OI <- dsCitiesNew[,c(-1,-2,-3,-4,-10,-11,-15,-16,-17,-19,-29,-38,-39,-47,-48,-49,-51,-52,-53,-54)]
+# Divide o dataframe em treinamento e teste, com taxa de 80% na coluna 'SUPORTE_OI'
+dfCitiesSuporte_OI <- dsCitiesNew[,c(-1,-2,-3,-4,-10,-11,-12,-13,-14,-15,-16,-17,-19,-20,-21,-22,-23,-24,-25,-26,
+                                     -27,-29,-30,-31,-38,-39,-42,-43,-44,-45,-47,-48,-49,-51,-52,-53,-54)]
 str(dfCitiesSuporte_OI)
-splitting = sample.split(dfCitiesSuporte_OI$SUPORTE_OI, SplitRatio = 0.7)
+splitting = sample.split(dfCitiesSuporte_OI$SUPORTE_OI, SplitRatio = 0.8)
 df_arvore_treinamento= subset(dfCitiesSuporte_OI, splitting == TRUE)
 df_arvore_teste = subset(dfCitiesSuporte_OI, splitting == FALSE)
 
@@ -234,11 +235,11 @@ print(classifier)
 rpart.plot(classifier)
 
 # Previsão
-prediction <- predict(classifier, newdata = df_arvore_teste[,-34], type = 'class')
+prediction <- predict(classifier, newdata = df_arvore_teste[,-17], type = 'class')
 print(prediction)
 
 # Matriz de confusão
-table_prediction <- table(df_arvore_teste[,34],prediction)
+table_prediction <- table(df_arvore_teste[,17],prediction)
 print(table_prediction)
 confusionMatrix(table_prediction)
 # Acurácia: 61%

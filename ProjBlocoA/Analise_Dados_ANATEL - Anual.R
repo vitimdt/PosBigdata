@@ -367,7 +367,7 @@ ggplot() +
            aes(x = UF, y = PercRec_2018), 
            stat = "identity",
            fill = "orange"
-  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("2018") + ggtitle("Proporção Reclamações ANATEL - SMP")
+  ) + facet_grid(NomeFantasia ~ .) + xlab("Estados") + ylab("2018") + ggtitle("Percentual Reclamações ANATEL - SMP")
 
 #dsQualidadeComReclamacoes <- dsQualidadeComReclamacoes[,c(-6,-7,-8)]
 # Gerando o gráfico de correlação entre as variáveis
